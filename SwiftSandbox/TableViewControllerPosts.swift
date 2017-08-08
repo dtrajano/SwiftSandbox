@@ -14,7 +14,11 @@ class TableViewControllerPosts: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        posts = RepositoryPosts.sharedInstance().getPosts()
+        RepositoryPosts.sharedInstance().getPosts()
+        RepositoryPosts.sharedInstance().getPosts2(take: 2).subscribe(onNext: { data in
+          print(data)
+        });
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +35,7 @@ class TableViewControllerPosts: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return posts.count
+        return 1
     }
 
     

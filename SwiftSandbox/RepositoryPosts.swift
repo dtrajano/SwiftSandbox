@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 
 class RepositoryPosts: NSObject {
@@ -17,20 +18,30 @@ class RepositoryPosts: NSObject {
         return instance
     }
     
-    func getPosts() -> [Post] {
+    func getPosts2(take: Int) -> Observable<String> {
+        return Observable<String>.create({ (observer) in
+            observer.onNext("Deu fogo!")
+            return Disposables.create()
+        })
+    }
+    
+    func getPosts() {
+//        return Observable<[Post]>.create({ (observer) in
+//            
+//        })
         var tempArrayPosts: [Post] = []
         _ = UtilityHttpRequest
-            .getRequest(url: "https://jsonplaceholder.typicode.com/posts/1",
+            .getRequest(url: "https://jsonplaceholder.typicode.com/posts/",
              completionHandler: { response in
-                _ = response.map({  json in
-                    let tempPost = Post(json: json)
-                    tempArrayPosts += [tempPost]
+                _ = response.flatMap({ json in
+                    //Post(json: json)
+                    
                 })
+                
+                //print(tempArrayPosts)
             },
             completionError: { error in
                 print(error)
             });
-        
-        return tempArrayPosts
     }
 }

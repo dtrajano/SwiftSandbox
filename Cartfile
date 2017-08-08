@@ -4,3 +4,6 @@ github "Alamofire/Alamofire" ~> 4.4
 #ReactiveX
 github "ReactiveX/RxSwift" ~> 3.0
 
+#EVReflection
+
+github "evermeer/EVReflection"
