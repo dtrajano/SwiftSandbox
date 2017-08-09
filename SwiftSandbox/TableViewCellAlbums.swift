@@ -1,22 +1,21 @@
 //
-//  TableViewCellPosts.swift
+//  TableViewCellAlbums.swift
 //  SwiftSandbox
 //
-//  Created by Diogo Trajano on 07/08/17.
+//  Created by Diogo Trajano on 09/08/17.
 //  Copyright © 2017 Diogo Trajano. All rights reserved.
 //
 
 import UIKit
 
-class TableViewCellPosts: UITableViewCell {
+class TableViewCellAlbums: UITableViewCell {
 
-    //MARK: Controls
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblBody: UILabel!
-    @IBOutlet weak var lblUserId: UILabel!
-    @IBOutlet weak var lblPostId: UILabel!
+    //MARK: - Controls
+    @IBOutlet weak var imgAlbumPhoto: UIImageView!
+    @IBOutlet weak var lblAlbumName: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var lblTrackCount: UILabel!
     
-
     
     override func awakeFromNib() {
         super.awakeFromNib()

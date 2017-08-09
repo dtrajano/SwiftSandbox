@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 
 
+
 class RepositoryPosts: NSObject {
     
     static let instance : RepositoryPosts = RepositoryPosts()
@@ -18,30 +19,33 @@ class RepositoryPosts: NSObject {
         return instance
     }
     
-    func getPosts2(take: Int) -> Observable<String> {
-        return Observable<String>.create({ (observer) in
-            observer.onNext("Deu fogo!")
+    func getPostById(postId: Int) ->Observable<[Post]> {
+        return Observable<[Post]>.create({ (observer) in
+            _ = UtilityHttpRequest.getRequestResponseString(url: "https://jsonplaceholder.typicode.com/posts/" + String(postId)).subscribe(
+                onNext: { resultado in
+                    var posts: [Post] = []
+                    posts += [Post(json: resultado)]
+                    observer.onNext(posts)
+            },
+                onError:{ erro in
+                    observer.onError(erro)
+            })
+            
             return Disposables.create()
         })
     }
     
-    func getPosts() {
-//        return Observable<[Post]>.create({ (observer) in
-//            
-//        })
-        var tempArrayPosts: [Post] = []
-        _ = UtilityHttpRequest
-            .getRequest(url: "https://jsonplaceholder.typicode.com/posts/",
-             completionHandler: { response in
-                _ = response.flatMap({ json in
-                    //Post(json: json)
-                    
-                })
-                
-                //print(tempArrayPosts)
+    func getPosts() -> Observable<[Post]> {
+        return Observable<[Post]>.create({ (observer) in
+            _ = UtilityHttpRequest.getRequestResponseString(url: "https://jsonplaceholder.typicode.com/posts/").subscribe(
+                onNext: { resultado in
+                    observer.onNext([Post](json: resultado))
             },
-            completionError: { error in
-                print(error)
-            });
+                onError:{ erro in
+                    observer.onError(erro)
+            })
+            
+            return Disposables.create()
+        })
     }
 }
