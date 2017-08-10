@@ -14,6 +14,7 @@ class Album: EVObject {
     var artworkUrl60: String = ""
     var collectionPrice: Double = 0.0
     var trackCount: Int = 0
+    var releaseDate: NSDate = NSDate()
     
     required init() {
     }

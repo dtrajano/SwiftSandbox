@@ -8,20 +8,25 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import RxSwift
 
 class UtilityHttpRequest: NSObject {
 
-//    static func getRequest(url: String) -> Observable<String> {
-//        return Observable<String>.create({ (observer) in
-//            _ = getRequest(url: url, completionHandler: { response in
-//                observer.onNext(response.result.value!);
-//            }, completionError: { error in
-//                observer.onError(error)
-//            })
-//            return Disposables.create()
-//        })
-//    }
+    static func getRequestResponseImage(url: String) ->Observable<Image> {
+        return Observable<Image>.create({ (observer) in
+            getRequest(url: url).responseImage(completionHandler: { response in
+                switch response.result {
+                case .success:
+                    observer.onNext(response.result.value!)
+                case .failure(let error):
+                    print(error)
+                    observer.onNext(#imageLiteral(resourceName: "defaultImageAlbum"))
+                }
+            })
+            return Disposables.create()
+        })
+    }
     
     static func getRequestResponseString(url: String) -> Observable<String> {
         return Observable<String>.create({ (observer) in
@@ -49,10 +54,6 @@ class UtilityHttpRequest: NSObject {
             })
             return Disposables.create()
         })
-    }
-    
-    static func getRequestResponse(url: String) {
-        
     }
     
 //    private static func getRequest(url: String,

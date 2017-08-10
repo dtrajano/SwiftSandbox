@@ -15,11 +15,13 @@ class TableViewCellAlbums: UITableViewCell {
     @IBOutlet weak var lblAlbumName: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblTrackCount: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        imgAlbumPhoto.image = #imageLiteral(resourceName: "defaultImageAlbum")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

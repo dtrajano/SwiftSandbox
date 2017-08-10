@@ -12,22 +12,33 @@ class ViewControllerAlbums: UIViewController {
 
     //MARK: - Controls
     @IBOutlet weak var tbvAlbums: TableViewAlbums!
+    @IBOutlet weak var btnPesquisar: UIButton!
+    @IBOutlet weak var txtPesquisa: UITextField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tbvAlbums.initialize()
-        _ = RepositoryAlbums.sharedInstance().getAlbums().subscribe(
-            onNext: { resultado in
-                self.tbvAlbums.Albums = resultado
-                self.tbvAlbums.reloadData()
-        })
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }    
+    //MARK: - Control Events
+    @IBAction func btnPesquisar_Click(_ sender: Any) {
+        Utility.customActivityIndicatory(self.view, startAnimate: true)
+        let textoPesquisa = txtPesquisa.text?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+        self.tbvAlbums.Albums = []
+        self.tbvAlbums.reloadData()
+
+        _ = RepositoryAlbums.sharedInstance().getAlbums(artistName: textoPesquisa!).subscribe(
+            onNext: { resultado in
+                self.tbvAlbums.Albums = resultado
+                self.tbvAlbums.reloadData()
+                Utility.customActivityIndicatory(self.view, startAnimate: false)
+        })
     }
     
 

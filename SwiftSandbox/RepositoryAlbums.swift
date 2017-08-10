@@ -16,9 +16,9 @@ class RepositoryAlbums: NSObject {
         return instance
     }
     
-    public func getAlbums() -> Observable<[Album]> {
+    public func getAlbums(artistName: String) -> Observable<[Album]> {
         return Observable<[Album]>.create({ (observer) in
-            _ = UtilityHttpRequest.getRequestResponseData(url: "https://itunes.apple.com/lookup?id=909253&entity=album").subscribe(
+            _ = UtilityHttpRequest.getRequestResponseData(url: "https://itunes.apple.com/search?term=" + artistName).subscribe(
                 onNext: { resultado in
                     let array = [Album](dictionaryArray: (resultado["results"] as? [NSDictionary])!)
                     observer.onNext(array)
@@ -27,6 +27,16 @@ class RepositoryAlbums: NSObject {
                     observer.onError(erro)
             })
             
+            return Disposables.create()
+        })
+    }
+    
+    public func getImageByAlbum(currentAlbum: Album) -> Observable<UIImage> {
+        return Observable<UIImage>.create({ (observer) in
+            _ = UtilityHttpRequest.getRequestResponseImage(url: currentAlbum.artworkUrl60).subscribe(
+                onNext: { resultado in
+                    observer.onNext(resultado as UIImage)
+            })
             return Disposables.create()
         })
     }

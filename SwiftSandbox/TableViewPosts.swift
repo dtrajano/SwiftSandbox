@@ -17,9 +17,6 @@ class TableViewPosts: UITableView, UITableViewDelegate, UITableViewDataSource {
         self.dataSource = self
         self.delegate = self
     }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = "TableViewCellPosts"
